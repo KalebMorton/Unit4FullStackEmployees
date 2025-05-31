@@ -14,8 +14,7 @@ export async function createEmployee(name, birthday, salary) {
 /** @returns all employees */
 export async function getEmployees() {
   const result = await db.query(`SELECT * FROM employees;`)
-  console.log(result)
-  return result
+  return result.rows
 }
 
 /**
@@ -25,8 +24,7 @@ export async function getEmployees() {
 export async function getEmployee(id) {
   const result = await db.query(`SELECT * FROM employees WHERE id = $1`, [id]
 )
-  console.log(result)
-  return result
+  return result.rows[0]
 }
 
 /**
@@ -38,7 +36,6 @@ export async function updateEmployee(id, name, birthday, salary) {
     `UPDATE employees SET name = $1, birthday = $2, salary = $3 WHERE id = $4
     RETURNING *;`, [name, birthday, salary, id]
   )
-  console.log(result)
   return result
 }
 
@@ -51,10 +48,5 @@ export async function deleteEmployee(id) {
     `DELETE FROM employees WHERE id = $1
     RETURNING *;`, [id]
   )
-  console.log(result)
   return result
 }
-
-//getEmployee(1)
-//updateEmployee(5, "bob", "2025-05-05", 20)
-deleteEmployee(1) //test this dipshit
